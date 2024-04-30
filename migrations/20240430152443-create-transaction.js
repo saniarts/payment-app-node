@@ -10,7 +10,8 @@ module.exports = {
       },
       amount: {
         allowNull: false,
-        type: Sequelize.FLOAT
+        type: Sequelize.DECIMAL(10, 2), 
+        defaultValue: '0.00'
       },
       status: {
         allowNull: false,
