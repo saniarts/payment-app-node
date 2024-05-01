@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator');
 const { sendErrorRes, sendSuccessRes } = require('../helpers/response');
 const { isValidTransactionType, getTransactionTypeCode, callThirdPartyAPI, getOrderId } = require('../helpers/transaction');
-const { Transaction, sequelize } = require('../models');
+const { Transaction } = require('../models');
 
 const transaction = async (req, res) => {
   try {
@@ -77,7 +77,7 @@ const history = async (req, res) => {
         });
 
         if (transactionHistory) {
-            return sendSuccessRes(res, 201, transactionHistory, `Get transaction history successfully`)
+            return sendSuccessRes(res, 200, transactionHistory, `Get transaction history successfully`)
         }
 
         return sendErrorRes(res, 404, 'Transaction history not found', [] );
@@ -88,6 +88,6 @@ const history = async (req, res) => {
 }
 
 module.exports = { 
-    transaction ,
+    transaction,
     history
 };
