@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         password: {
             allowNull: false,
-            type: Sequelize.STRING
+            type: DataTypes.STRING
         },
         total_amount: {
             type: DataTypes.DECIMAL(10, 2), 
