@@ -1,8 +1,16 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
-const generateToken = (userId, userEmail, userName) => {
-    return jwt.sign({ id: userId, email: userEmail, name: userName }, process.env.JWT_SECRET, { expiresIn: '1d' });
+const encodeToken = (token) => {
+    return Buffer.from(token).toString('base64');
+};
+
+const decodeToken = (token) => {
+    return Buffer.from(token, 'base64').toString('utf-8');
+};
+
+const generateToken = (userId) => {
+    return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '1d' });
 };
 
 const verifyToken = (token) => {
@@ -18,4 +26,9 @@ const verifyToken = (token) => {
     }
 };
 
-module.exports = { generateToken, verifyToken };
+module.exports = { 
+    generateToken, 
+    verifyToken,
+    encodeToken,
+    decodeToken
+ };

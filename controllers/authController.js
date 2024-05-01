@@ -47,7 +47,7 @@ const login = async (req, res) => {
             return sendErrorRes(res, 401, 'Invalid password', []);
         }
 
-        const token = generateToken(user.id, user.email, user.name);
+        const token = generateToken(user.id);
 
         sendSuccessRes(res, 200, {token: token}, "Logged in successfully")
     } catch (error) {
@@ -60,4 +60,8 @@ const logout = (req, res) => {
     sendSuccessRes(res, 200, [], "Logged out successfully")
 };
 
-module.exports = { register, login, logout };
+module.exports = { 
+    register, 
+    login, 
+    logout 
+};

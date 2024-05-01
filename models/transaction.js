@@ -17,10 +17,19 @@ module.exports = (sequelize, DataTypes) => {
     type: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    order_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
     }
   }, {
     paranoid: true 
   });
+
+  Transaction.associate = (models) => {
+    Transaction.belongsTo(models.User, { foreignKey: 'user_id' });
+  };
 
   return Transaction;
 };

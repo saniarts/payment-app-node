@@ -1,7 +1,8 @@
 const { verifyToken } = require('../helpers/auth');
 const { sendErrorRes } = require('../helpers/response');
+const { User } = require('../models'); 
 
-const authenticate = (req, res, next) => {
+const authenticate = async (req, res, next) => {
     try {
         const token = req.headers.authorization;
     
@@ -14,8 +15,13 @@ const authenticate = (req, res, next) => {
         if (!decoded) {
             return sendErrorRes(res, 401, 'Invalid token', []);
         }
+
+        const user = await User.findByPk(decoded.id);
+        if (!user) {
+            return sendErrorRes(res, 401, 'User not found', []);
+        }
     
-        req.decoded = decoded
+        req.user = user;
         next();
     } catch (error) {
         sendErrorRes(res, 500, 'Internal Server Error', error.message);
