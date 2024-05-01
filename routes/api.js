@@ -10,7 +10,7 @@ const { transactionValidator } = require('../validators/transactionValidator');
 
 // controller
 const { register, login, logout } = require('../controllers/authController');
-const { transaction } = require('../controllers/transactionController');
+const { transaction, history } = require('../controllers/transactionController');
 const { fakeApi } = require('../controllers/fakeApiController');
 const { fakeApiValidator } = require('../validators/fakeApiValidator');
 
@@ -26,7 +26,7 @@ router.post('/logout', authenticate, logout);
 
 // transactions
 router.post('/transactions/:transactionType', authenticate, transactionValidator, transaction);
-// router.get('/transactions/history', transactionController.getTransactionHistory);
+router.get('/transactions/history', authenticate, history);
 
 // fake third party
 router.post('/fakeApi', fakeApiAuth, fakeApiValidator, fakeApi);
