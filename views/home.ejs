@@ -1,0 +1,167 @@
+<%- include('./layout', { 
+    pageTitle: 'Home', 
+    css: `
+        <style>
+            .rounded-15 {
+                border-radius: 15px !important;
+            }
+            .lightgrey {
+                color: #B6BED2;
+            }
+            .border-lightgrey {
+                border: 1px solid rgba(0, 0, 0, .125);
+            }
+            table {
+                width: 100%;
+            }
+            table td {
+                padding-bottom: 15px;
+            }
+            table td:nth-child(1) {
+                width: 40px;
+            }
+            table td:nth-child(3) {
+                width: 30px;
+                text-align: right;
+            }
+        </style>
+    `,
+    content: `
+        <div class="content">
+            <div class="row">
+                <div class="col-xl-3 col-md-4">
+
+                    <!-- Wallet -->
+                    <div class="card rounded-15 mb-1">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <i class="icon-wallet icon-2x text-primary-700 border-primary-700 border-2 rounded-round p-3 mb-2 mt-1"></i>
+                                <h4 class="mb-0 font-weight-semibold">Your Name</h4>
+                                <a href="#" class="btn btn-light btn-outline alpha-primary border-lightgrey font-weight-semibold rounded-round mt-2 mr-1"><i class="icon-user mr-2 lightgrey"></i>Profile</a>
+                                <a href="/login" class="btn btn-light btn-outline alpha-danger border-lightgrey btn-icon rounded-round mt-2"><i class="icon-exit lightgrey"></i></a>
+                            </div>
+                            <div class="text-center mb-1">
+                                <span class="d-block lightgrey font-weight-semibold">Total Balance</span>
+                                <h1 class="mb-1 font-weight-bold text-primary-700">Rp 120.000,00</h1>
+                                <h6 class="d-block lightgrey font-weight-semibold">IDR</h6>
+                                <a href="#" class="btn btn-light btn-outline alpha-primary border-lightgrey font-weight-bold rounded-round mt-2 mr-1"><i class="icon-arrow-up8 mr-2 text-teal-300"></i>Deposit</a>
+                                <a href="#" class="btn btn-light btn-outline alpha-primary border-lightgrey font-weight-bold rounded-round mt-2 ml-1"><i class="icon-arrow-down8 mr-2 text-primary-300"></i>Withdraw</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /wallet -->
+                </div>
+
+                <div class="col-xl-9 col-md-8">
+
+                    <!-- Transaction history -->
+                    <div class="card rounded-15">
+                        <div class="card-header header-elements-inline">
+                            <h4 class="card-title font-weight-semibold">Transaction History</h4>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="d-flex justify-content: center;">
+                                <table id="myTable"> 
+                                    <tbody></tbody>
+                                </table> 
+                            </div>
+
+                            <div id="pagination" class="mt-1 text-right"></div> 
+                        
+                            <script> 
+                                const data = [
+                                { type: "Withdraw", date: "29/04/2024 09:10:20", status: "Success", amount: "-Rp20.000,00" }, 
+                                { type: "Deposit", date: "28/04/2024 10:02:18", status: "Success", amount: "+Rp100.000,00" }, 
+                                { type: "Withdraw", date: "27/04/2024 11:30:01", status: "Failed", amount: "-Rp50.000,00" }, 
+                                { type: "Deposit", date: "26/04/2024 13:04:10", status: "Success", amount: "+Rp20.000,00" }, 
+                                { type: "Deposit", date: "25/04/2024 07:15:40", status: "Failed", amount: "+Rp25.000,00" }, 
+                                { type: "Withdraw", date: "25/04/2024 09:10:20", status: "Success", amount: "-Rp70.000,00" }, 
+                                { type: "Deposit", date: "24/04/2024 10:02:18", status: "Success", amount: "+Rp25.000,00" }, 
+                                { type: "Withdraw", date: "24/04/2024 11:30:01", status: "Failed", amount: "-Rp90.000,00" }, 
+                                { type: "Deposit", date: "23/04/2024 13:04:10", status: "Success", amount: "+Rp80.000,00" }, 
+                                { type: "Deposit", date: "22/04/2024 07:15:40", status: "Failed", amount: "+Rp100.000,00" }, 
+                                ];
+                        
+                                const rowsPerPage = 5;
+                                let currentPage = 1;
+                        
+                                function displayTable(page) {
+                                    const tableBody = document.querySelector("#myTable tbody");
+                                    const startIndex = (page - 1) * rowsPerPage;
+                                    const endIndex = startIndex + rowsPerPage;
+                                    const slicedData = data.slice(startIndex, endIndex);
+                    
+                                    while (tableBody.firstChild) {
+                                        tableBody.removeChild(tableBody.firstChild);
+                                    }
+
+                                    slicedData.forEach(item => {
+                                        const row = tableBody.insertRow();
+                                        
+                                        const logoCell = row.insertCell(0);
+                                        const typeDateCell = row.insertCell(1);
+                                        const statusCell = row.insertCell(2);
+                                        
+                                        if (item.type === "Deposit") {
+                                            logoCell.innerHTML = '<i class="icon-arrow-up8 border-1 rounded-round p-1 text-teal-300"></i>';
+                                        } else if (item.type === "Withdraw") {
+                                            logoCell.innerHTML = '<i class="icon-arrow-down8 border-1 rounded-round p-1 text-primary-300"></i>';
+                                        }
+
+                                        typeDateCell.innerHTML = '<h6 class="d-block font-weight-semibold mb-0">' + item.type + '</h6><span class="d-block lightgrey">' + item.date + '</span>';
+
+                                        if (item.status === "Success") {
+                                            statusCell.innerHTML = '<h6 class="d-block mb-0">' + item.amount + '</h6><span class="d-block text-success">Success</span>';
+                                        } else if (item.status === "Failed") {
+                                            statusCell.innerHTML = '<h6 class="d-block mb-0">' + item.amount + '</h6><span class="d-block text-danger">Failed</span>';
+                                        }
+                                    });
+                        
+                                    updatePagination(page);
+                                }
+                        
+                                function updatePagination(currentPage) {
+                                    const pageCount = Math.ceil(data.length / rowsPerPage);
+                                    const paginationContainer = document.getElementById("pagination");
+                                    paginationContainer.innerHTML = "";
+
+                                    const prevLink = document.createElement("a");
+                                    prevLink.href = "#";
+                                    prevLink.className = "text-dark mr-2";
+                                    prevLink.innerHTML = '<i class="icon-arrow-left5"></i> Prev';
+                                    prevLink.onclick = function () {
+                                        if (currentPage > 1) {
+                                            currentPage--;
+                                            displayTable(currentPage);
+                                        }
+                                    };
+                                    paginationContainer.appendChild(prevLink);
+                                    paginationContainer.appendChild(document.createTextNode(" "));
+
+                                    const nextLink = document.createElement("a");
+                                    nextLink.href = "#";
+                                    nextLink.className = "text-dark ml-2";
+                                    nextLink.innerHTML = 'Next <i class="icon-arrow-right5"></i>';
+                                    nextLink.onclick = function () {
+                                        if (currentPage < pageCount) {
+                                            currentPage++;
+                                            displayTable(currentPage);
+                                        }
+                                    };
+                                    paginationContainer.appendChild(nextLink);
+                                    paginationContainer.appendChild(document.createTextNode(" "));
+                                }
+                        
+                                displayTable(currentPage);
+                            </script>
+                        </div>
+                    </div>
+                    
+                    <!-- /Transaction history -->
+                    
+                </div>
+            </div>
+        </div>
+        ` 
+}) %>
