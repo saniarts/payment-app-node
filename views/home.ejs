@@ -32,16 +32,16 @@
     content: `
         <div class="content">
             <div class="row">
-                <div class="col-xl-3 col-md-4">
+                <div class="col-xl-4 col-md-5">
 
                     <!-- Wallet -->
-                    <div class="card rounded-15 mb-1">
+                    <div class="card rounded-15 mb-3">
                         <div class="card-body">
                             <div class="text-center mb-3">
                                 <i class="icon-wallet icon-2x text-primary-700 border-primary-700 border-2 rounded-round p-3 mb-2 mt-1"></i>
                                 <h4 id="name" class="mb-0 font-weight-semibold">-</h4>
-                                <button onclick="logout()" class="btn btn-light btn-outline alpha-primary border-lightgrey font-weight-semibold rounded-round mt-2 mr-1"><i class="icon-user mr-2 lightgrey"></i>Profile</button>
-                                <a href="/login" class="btn btn-light btn-outline alpha-danger border-lightgrey btn-icon rounded-round mt-2"><i class="icon-exit lightgrey"></i></a>
+                                <!-- <a onclick="logout()" class="btn btn-light btn-outline alpha-primary border-lightgrey font-weight-semibold rounded-round mt-2 mr-1"><i class="icon-user mr-2 lightgrey"></i>Profile</a> -->
+                                <button onclick="logout()"  class="btn btn-light btn-outline alpha-danger border-lightgrey btn-icon rounded-round mt-2"><i class="icon-exit lightgrey"></i></buttin>
                             </div>
                             <div class="text-center mb-1">
                                 <span class="d-block lightgrey font-weight-semibold">Total Balance</span>
@@ -55,7 +55,7 @@
                     <!-- /wallet -->
                 </div>
 
-                <div class="col-xl-9 col-md-8">
+                <div class="col-xl-8 col-md-7">
 
                     <!-- Transaction history -->
                     <div class="card rounded-15">
@@ -421,8 +421,7 @@
                         method: 'POST',
                         headers: {
                             'Authorization': 'Bearer ' + token,
-                        },
-                        body: JSON.stringify(requestBody)
+                        }
                     });
 
                     const responseData = await response.json();
@@ -436,7 +435,7 @@
                         alert(responseData.error.message);
                     }
                 } catch (error) {
-                    console.error('Withdraw error:', error.message);
+                    console.error('Logout error:', error.message);
                     alert('An unexpected error occurred. Please try again later.');
                 }
             }
