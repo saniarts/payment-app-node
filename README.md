@@ -11,9 +11,9 @@ Tools:
 
 ## Documentation
 Here's the documentation:
-- [Flowchart](documentation/Flowchart Simple Payment.png)
+- [Flowchart](https://github.com/saniarts/payment-app-node/blob/f938769e5bc0e5d66ed188e53795d15ccce1e632/documentation/Flowchart%20Simple%20Payment.png)
 - [ERD](documentation/ERD.png)
-- [Postman](documentation/Simple Payment Node.postman_collection.json)
+- [Postman](https://github.com/saniarts/payment-app-node/blob/f938769e5bc0e5d66ed188e53795d15ccce1e632/documentation/Simple%20Payment%20Node.postman_collection.json)
 - Example Database
 
 ## Clone
