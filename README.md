@@ -14,7 +14,7 @@ Here's the documentation:
 - [Flowchart](https://github.com/saniarts/payment-app-node/blob/f938769e5bc0e5d66ed188e53795d15ccce1e632/documentation/Flowchart%20Simple%20Payment.png)
 - [ERD](documentation/ERD.png)
 - [Postman](https://github.com/saniarts/payment-app-node/blob/f938769e5bc0e5d66ed188e53795d15ccce1e632/documentation/Simple%20Payment%20Node.postman_collection.json)
-- Example Database
+- [Example Database](documentation/payment_db.sql)
 
 ## Clone
 1. Clone it
@@ -23,7 +23,8 @@ Here's the documentation:
    `npm install`
 3. Change the `.env` with your preferences.
 4. Connect to Mysql. I used XAMPP.
-5. You can use the example database or migrating and seeding by yourself
+5. You can import the example database or migrating and seeding by yourself
+   - if you import the database, it use email `admin@example.com` and password `123456`
    - migrate `npx sequelize-cli db:migrate:all`
    - seed `npx sequelize-cli db:seed:all`
 6. Start your application:
