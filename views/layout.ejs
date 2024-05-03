@@ -20,19 +20,7 @@
     <% } %>
 </head>
 <body>
-    <!-- Main navbar -->
-    <% if (typeof header !== 'undefined') { %>
-        <%- header %>
-    <% } %>
-    <!-- /main navbar -->
-
-    <!-- page content -->
     <div class="page-content">
-
-        <!-- Main sidebar -->
-		<!-- /main sidebar -->
-
-        <!-- Main content -->
 		<div class="content-wrapper">
 
             <%- content %> 
@@ -46,5 +34,7 @@
 <script src="global_assets/js/main/jquery.min.js"></script>
 <script src="global_assets/js/main/bootstrap.bundle.min.js"></script>
 <script src="global_assets/js/plugins/loaders/blockui.min.js"></script>
-
+<% if (typeof js !== 'undefined') { %>
+    <%- js %>
+<% } %>
 </html>

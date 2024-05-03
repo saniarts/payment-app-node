@@ -14,15 +14,15 @@
         <div class="content d-flex justify-content-center align-items-center">
 
             <!-- Login form -->
-            <form class="login-form" action="#">
+            <form id="login" class="login-form" action="#">
                 <div class="card mb-0 rounded-15">
                     <div class="card-body">
                         <div class="form-group">
-                            <input type="text" class="form-control rounded-10" placeholder="Email">
+                            <input type="text" class="form-control rounded-10" placeholder="Email" required>
                         </div>
 
                         <div class="form-group">
-                            <input type="password" class="form-control rounded-10" placeholder="Password">
+                            <input type="password" class="form-control rounded-10" placeholder="Password" required>
                         </div>
 
                         <div class="form-group">
@@ -38,5 +38,60 @@
             <!-- /login form -->
 
         </div>
-    ` 
+    `,
+    js: `
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const auth = localStorage.getItem('token');
+                if (auth) {
+                    window.location.href = '/';
+                }
+
+                const form = document.querySelector('#login');
+
+                form.addEventListener('submit', async function(event) {
+                    event.preventDefault();
+
+                    const email = form.querySelector('input[type="text"]').value;
+                    const password = form.querySelector('input[type="password"]').value;
+                    
+                    if (password.length < 6) {
+                        alert('Password must be at least 6 characters long.');
+                        return;
+                    }
+
+                    const requestBody = {
+                        email: email,
+                        password: password
+                    };
+
+                    try {
+                        const response = await fetch('/api/login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(requestBody)
+                        });
+
+                        const responseData = await response.json();
+
+                        if (response.ok) {
+                            form.reset();
+
+                            const token = responseData.data.token;
+                            localStorage.setItem('token', token);
+
+                            window.location.href = '/';
+                        } else {
+                            alert('Your email or password is wrong. Please check it again.');
+                        }
+                    } catch (error) {
+                        console.error('Login error:', error.message);
+                        alert('An unexpected error occurred. Please try again later.');
+                    }
+                });
+            });
+        </script>
+    `,
 }) %>
