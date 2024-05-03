@@ -1,7 +1,7 @@
 const express = require('express');
 
 // middleware
-const authenticate = require('../middlewares/authenticate');
+const { authenticate} = require('../middlewares/authenticate');
 const fakeApiAuth = require('../middlewares/fakeApiAuth');
 
 // validator

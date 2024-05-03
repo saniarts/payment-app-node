@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 const { sendErrorRes, sendSuccessRes } = require('../helpers/response');
 const { isValidTransactionType, getTransactionTypeCode, callThirdPartyAPI, getOrderId } = require('../helpers/transaction');
 const { Transaction } = require('../models');
+const { literal } = require('sequelize');
 
 const transaction = async (req, res) => {
   try {
@@ -73,7 +74,14 @@ const history = async (req, res) => {
         const user_id = req.user.id;
         const transactionHistory = await Transaction.findAll({
             where: { user_id },
-            order: [['createdAt', 'Desc']] 
+            order: [['createdAt', 'Desc']],
+            attributes: [
+                'id',
+                'status',
+                'amount',
+                'type',
+                [literal("DATE_FORMAT(createdAt, '%e %M %Y')"), 'date']
+            ]
         });
 
         if (transactionHistory) {

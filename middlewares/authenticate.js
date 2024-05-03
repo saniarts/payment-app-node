@@ -1,6 +1,8 @@
 const { verifyToken } = require('../helpers/auth');
 const { sendErrorRes } = require('../helpers/response');
 const { User } = require('../models'); 
+var LocalStorage = require('node-localstorage').LocalStorage,
+localStorage = new LocalStorage('./scratch');
 
 const authenticate = async (req, res, next) => {
     try {
@@ -28,4 +30,4 @@ const authenticate = async (req, res, next) => {
     }
 };
 
-module.exports = authenticate;
+module.exports = { authenticate };

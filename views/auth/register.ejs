@@ -13,20 +13,20 @@
     content: `
         <div class="content d-flex justify-content-center align-items-center">
 
-            <!-- Login form -->
-            <form class="login-form" action="#">
+            <!-- Register form -->
+            <form id="register" class="login-form" action="#">
                 <div class="card mb-0 rounded-15">
                     <div class="card-body">
                         <div class="form-group">
-                            <input type="text" class="form-control rounded-10" placeholder="Name">
+                            <input id="name" type="text" class="form-control rounded-10" placeholder="Name" required>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control rounded-10" placeholder="Email">
+                            <input id="email" type="text" class="form-control rounded-10" placeholder="Email" required>
                         </div>
 
                         <div class="form-group">
-                            <input type="password" class="form-control rounded-10" placeholder="Password">
+                            <input type="password" class="form-control rounded-10" placeholder="Password" required>
                         </div>
 
                         <div class="form-group">
@@ -39,8 +39,72 @@
                     </div>
                 </div>
             </form>
-            <!-- /login form -->
+            <!-- /Register form -->
 
         </div>
-    ` 
+    `,
+    js: `
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const auth = localStorage.getItem('token');
+                if (auth) {
+                    window.location.href = '/';
+                }
+
+                const form = document.querySelector('#register');
+
+                form.addEventListener('submit', async function(event) {
+                    event.preventDefault();
+
+                    const name = form.querySelector('#name').value;
+                    const emailInput = form.querySelector('#email');
+                    const email = emailInput.value;
+                    const passwordInput = form.querySelector('input[type="password"]');
+                    const password = passwordInput.value;
+                    
+                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailPattern.test(email)) {
+                        alert('Please enter a valid email address.');
+                        emailInput.focus;
+                        return;
+                    }
+
+                    if (password.length < 6) {
+                        alert('Password must be at least 6 characters long.');
+                        passwordInput.focus;
+                        return;
+                    }
+
+                    const requestBody = {
+                        name: name,
+                        email: email,
+                        password: password
+                    };
+
+                    try {
+                        const response = await fetch('/api/register', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(requestBody)
+                        });
+
+                        const responseData = await response.json();
+
+                        if (response.ok) {
+                            form.reset();
+                            window.location.href = '/login';
+                            alert(responseData.message);
+                        } else {
+                            alert(responseData.error.message);
+                        }
+                    } catch (error) {
+                        console.error('Register error:', error.message);
+                        alert('An unexpected error occurred. Please try again later.');
+                    }
+                });
+            });
+        </script>
+    `
 }) %>

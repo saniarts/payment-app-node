@@ -3,11 +3,15 @@ require('dotenv').config();
 const express = require("express");
 const api = require('./routes/api');
 const web = require('./routes/web');
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT;
 
 app.set('view engine', 'ejs');
+
+// Middleware to parse JSON bodies
+app.use(bodyParser.json());
 
 app.use(express.static('public'));
 app.use(express.json());

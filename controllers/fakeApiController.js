@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const { sendErrorRes, sendSuccessRes } = require('../helpers/response');
+const { sendErrorRes } = require('../helpers/response');
 
 const fakeApi = async (req, res) => {
   try {
